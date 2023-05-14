@@ -1,3 +1,5 @@
+from random import randint
+
 
 class Board:
     """
@@ -18,7 +20,7 @@ class Board:
     def print(self):
         print("  N")
         print("W + E")
-        print("  S")
+        print(f"  S    {self.type}")
         num = "  "
         for c in range(self.size):
             num += f'{c}  '
@@ -48,6 +50,9 @@ class Board:
             self.ship_coords.append(
                 (x + (dirX * segment), y + (dirY * segment)))
             if self.type == 'player':
+                self.board[y + (dirY * segment)][x + (dirX * segment)] = '\u25A6'
+            ### TEMP #######
+            elif self.type == 'computer':
                 self.board[y + (dirY * segment)][x + (dirX * segment)] = '\u25A6'
 
 
@@ -84,6 +89,7 @@ def place_ship(board, ship_length):
     """
     Gets input for position of ship, and places ship
     """
+    # TODO clean up code
     if board.type == 'player':
         print(f'You are placing a ship of length {ship_length}')
         print('Choose a coordinate for one end of the ship')
@@ -99,6 +105,47 @@ def place_ship(board, ship_length):
         while True:
             direction = input(
                 'Please choose the direction you want to place your ship (N, E, S, W)\n').lower()
+
+            if validate_direction(direction, int(x), int(y), ship_length, board, False):
+                break
+        # Valid coordinates, add ship to board
+        dirX = 0
+        dirY = 0
+        if (direction == 'n' or direction == 'north'):
+            dirY = -1
+        elif (direction == 'e' or direction == 'east'):
+            dirX = 1
+        elif (direction == 's' or direction == 'south'):
+            dirY = 1
+        elif (direction == 'w' or direction == 'west'):
+            dirX = -1
+
+        board.add_ship(ship_length, int(x), int(y), dirX, dirY)
+
+
+def place_ship_C(board, ship_length): # clean up code clean up code clean up code clean up code
+    """
+    Gets input for position of ship, and places ship
+    """
+    # TODO clean up code
+    if board.type == 'computer':
+        while True:
+            x = str(randint(0, board.size - 1))
+            y = str(randint(0, board.size - 1))
+            if validate_coords(x, y, ship_length, board):
+                break
+
+        direction = ''
+        while True:
+            direction = randint(0, 3)
+            if direction == 0:
+                direction = 'n'
+            elif direction == 1:
+                direction = 'e'
+            if direction == 2:
+                direction = 's'
+            else:
+                direction = 'w'
 
             if validate_direction(direction, int(x), int(y), ship_length, board, False):
                 break
@@ -179,9 +226,6 @@ def validate_direction(direction, x, y, ship_length, board, is_silent):
         if (not is_silent):
             print(f"Invalid data: {e}, please try again.\n")
         return False
-
-        # TODO Run validate_directions check with all directions before 
-        # confirming valid coordinates to make sure a ship can be placed at this location
     return True
 
 
@@ -213,8 +257,9 @@ def run_game():
     for ship_length in all_ships:
         for _ in range(all_ships[ship_length]):
             place_ship(player_board, int(ship_length))
-            place_ship(computer_board, int(ship_length))
+            place_ship_C(computer_board, int(ship_length))
             player_board.print()
+            computer_board.print()
 
 
 run_game()
