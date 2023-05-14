@@ -17,7 +17,7 @@ class Board:
     # Print board to screen
     def print(self):
         print("  N")
-        print("E + W")
+        print("W + E")
         print("  S")
         num = "  "
         for c in range(self.size):
@@ -100,7 +100,7 @@ def place_ship(board, ship_length):
             direction = input(
                 'Please choose the direction you want to place your ship (N, E, S, W)\n').lower()
 
-            if validate_direction(direction, int(x), int(y), ship_length, board):
+            if validate_direction(direction, int(x), int(y), ship_length, board, False):
                 break
         # Valid coordinates, add ship to board
         dirX = 0
@@ -130,16 +130,25 @@ def validate_coords(x, y, ship_length, board):
             raise ValueError(f'The coordinate ({x}, {y}) is not on the board. The board ranges from (0, 0) to ({board.size}, {board.size})')      
         elif (x, y) in board.ship_coords:
             raise ValueError(f'The coordinate ({x}, {y}) is already occupied by one of your ships')      
+        
+        # Check if ship can be placed in any direction from this coordinate
+        # Stops ships being cornered in
+        d = ['n', 'e', 's', 'w']
+        c = 0
+        while True:
+            if validate_direction(d[c], x, y, ship_length, board, True):
+                break
+            if c >= 3:
+                raise ValueError(f'The area you selected is too small for the ship to fit')
+            c += 1
+
     except ValueError as e:
         print(f"Invalid data: {e}, please try again.\n")
         return False
-
-        # TODO Run validate_directions check with all directions before 
-        # confirming valid coordinates to make sure a ship can be placed at this location
     return True
 
 
-def validate_direction(direction, x, y, ship_length, board):
+def validate_direction(direction, x, y, ship_length, board, is_silent):
     """
     Validate ship direction based of the chosen coordinates
     """
@@ -167,7 +176,8 @@ def validate_direction(direction, x, y, ship_length, board):
                     # Blocked by boat
                     raise ValueError(f'{direction} is blocked by a ship at ({x + (dirX * segment)}, {y + (dirY * segment)})')
     except ValueError as e:
-        print(f"Invalid data: {e}, please try again.\n")
+        if (not is_silent):
+            print(f"Invalid data: {e}, please try again.\n")
         return False
 
         # TODO Run validate_directions check with all directions before 
