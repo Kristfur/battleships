@@ -279,6 +279,20 @@ def compute_guess_result(x, y, board, is_computer):
     return True
 
 
+def check_for_win(board):
+    for segment in board.ship_coords:
+        if segment not in board.guesses:
+            return False
+        return True
+
+
+def win_game(winner):
+    if winner % 2 == 0:
+        print('Congratulations! You Win!')
+    else:
+        print('You lost all your battleships')
+
+
 def game_loop(player_board, computer_board):
     """
     Main game loop
@@ -289,13 +303,19 @@ def game_loop(player_board, computer_board):
             # Player's turn
             make_guess(computer_board)
             computer_board.print()
+            is_win = check_for_win(computer_board)
+            if is_win:
+                win_game(turn)
+                break
         else:
             # Computer's turn
             # get_computer_guess()
             make_guess(player_board)
             player_board.print()
-        # if check_for_win():
-            # win_game(turn)
+            is_win = check_for_win(player_board)
+            if is_win:
+                win_game(turn)
+                break
         turn += 1
 
         
