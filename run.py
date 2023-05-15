@@ -219,9 +219,11 @@ def validate_direction(direction, x, y, ship_length, board, is_silent):
             for segment in range(ship_length):
                 if (x + (dirX * segment) >= board.size or y + (dirY * segment) >= board.size) or (x + (dirX * segment) < 0 or y + (dirY * segment) < 0):
                     # Blocked by wall
+                    print(x, y, dirX, dirY, segment)
                     raise ValueError(f'Ship cannot be placed outside the game board')
                 elif (x + (dirX * segment), y + (dirY * segment)) in board.ship_coords:
                     # Blocked by boat
+                    print(x, y, dirX, dirY, segment)
                     raise ValueError(f'{direction} is blocked by a ship at ({x + (dirX * segment)}, {y + (dirY * segment)})')
     except ValueError as e:
         if (not is_silent):
@@ -262,7 +264,7 @@ def compute_guess_result(x, y, board, is_computer):
             raise ValueError(f'The coordinate ({x}, {y}) is not a number')
         x = int(x)
         y = int(y)
-        if (x > board.size or y > board.size) or (x < 0 or y < 0):
+        if (x >= board.size or y >= board.size) or (x < 0 or y < 0):
             raise ValueError(f'The coordinate ({x}, {y}) is not on the board. The board ranges from (0, 0) to ({board.size}, {board.size})')      
         elif (x, y) in board.guesses:
             raise ValueError(f'The coordinate ({x}, {y}) has already been guessed')      
@@ -270,7 +272,7 @@ def compute_guess_result(x, y, board, is_computer):
     except ValueError as e:
         if not is_computer:
             print(f"Invalid data: {e}, please try again.\n")
-            return False
+        return False
 
     # Update board
     if is_computer:
@@ -279,11 +281,13 @@ def compute_guess_result(x, y, board, is_computer):
     return True
 
 
-def check_for_win(board):
+def check_for_win(board):        
+    print(board.ship_coords)
     for segment in board.ship_coords:
+        print(segment)
         if segment not in board.guesses:
             return False
-        return True
+    return True
 
 
 def win_game(winner):
@@ -318,7 +322,7 @@ def game_loop(player_board, computer_board):
                 break
         turn += 1
 
-        
+       
 def run_game():
     """
     Set up game
