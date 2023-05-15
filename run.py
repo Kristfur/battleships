@@ -52,8 +52,8 @@ class Board:
             if self.type == 'player':
                 self.board[y + (dirY * segment)][x + (dirX * segment)] = '\u25A6'
             # ## TEMP #######
-            elif self.type == 'computer':
-                self.board[y + (dirY * segment)][x + (dirX * segment)] = '\u25A6'
+            # elif self.type == 'computer':
+            #    self.board[y + (dirY * segment)][x + (dirX * segment)] = '\u25A6'
 
 
 def introduction():
@@ -147,13 +147,11 @@ def place_ship_C(board, ship_length):  # clean up code clean up code clean up co
             else:
                 direction = 'w'
 
-            print('here', direction)
             if validate_direction(direction, int(x), int(y), ship_length, board, False):
                 break
         # Valid coordinates, add ship to board
         dirX = 0
         dirY = 0
-        print(x, y, direction)
         if (direction == 'n' or direction == 'north'):
             dirY = -1
         elif (direction == 'e' or direction == 'east'):
@@ -220,12 +218,9 @@ def validate_direction(direction, x, y, ship_length, board, is_silent):
             for segment in range(ship_length):
                 if (x + (dirX * segment) >= board.size or y + (dirY * segment) >= board.size) or (x + (dirX * segment) < 0 or y + (dirY * segment) < 0):
                     # Blocked by wall
-                    print(x, y, dirX, dirY, segment)
                     raise ValueError(f'Ship cannot be placed outside the game board')
                 elif (x + (dirX * segment), y + (dirY * segment)) in board.ship_coords:
                     # Blocked by boat
-                    print(x, y, dirX, dirY, segment)
-                    print(board.board)
                     raise ValueError(f'{direction} is blocked by a ship at ({x + (dirX * segment)}, {y + (dirY * segment)})')
     except ValueError as e:
         if (not is_silent):
@@ -284,9 +279,7 @@ def compute_guess_result(x, y, board, is_computer):
 
 
 def check_for_win(board):        
-    print(board.ship_coords)
     for segment in board.ship_coords:
-        print(segment)
         if segment not in board.guesses:
             return False
     return True
