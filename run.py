@@ -38,10 +38,10 @@ class Board:
         self.guesses.append((x, y))
 
         if (x, y) in self.ship_coords:
-            self.board[x][y] = '\u25A3'
+            self.board[y][x] = 'X'
             return 'Hit'
         else:
-            self.board[x][y] = '\u25A0'
+            self.board[y][x] = '\u2B1E'
             return 'Miss'
 
     # Add ship to board, if it is player's board, show ships on board
@@ -51,7 +51,7 @@ class Board:
                 (x + (dirX * segment), y + (dirY * segment)))
             if self.type == 'player':
                 self.board[y + (dirY * segment)][x + (dirX * segment)] = '\u25A6'
-            ### TEMP #######
+            # ## TEMP #######
             elif self.type == 'computer':
                 self.board[y + (dirY * segment)][x + (dirX * segment)] = '\u25A6'
 
@@ -123,7 +123,7 @@ def place_ship(board, ship_length):
         board.add_ship(ship_length, int(x), int(y), dirX, dirY)
 
 
-def place_ship_C(board, ship_length): # clean up code clean up code clean up code clean up code
+def place_ship_C(board, ship_length):  # clean up code clean up code clean up code clean up code
     """
     Gets input for position of ship, and places ship
     """
@@ -152,6 +152,7 @@ def place_ship_C(board, ship_length): # clean up code clean up code clean up cod
         # Valid coordinates, add ship to board
         dirX = 0
         dirY = 0
+        print(x, y, direction)
         if (direction == 'n' or direction == 'north'):
             dirY = -1
         elif (direction == 'e' or direction == 'east'):
@@ -173,8 +174,8 @@ def validate_coords(x, y, ship_length, board):
             raise ValueError(f'The coordinate ({x}, {y}) is not a number')
         x = int(x)
         y = int(y)
-        if (x > board.size or y > board.size) or (x < 0 or y < 0):
-            raise ValueError(f'The coordinate ({x}, {y}) is not on the board. The board ranges from (0, 0) to ({board.size}, {board.size})')      
+        if (x >= board.size or y >= board.size) or (x < 0 or y < 0):
+            raise ValueError(f'The coordinate ({x}, {y}) is not on the board. The board ranges from (0, 0) to ({board.size - 1}, {board.size - 1})')      
         elif (x, y) in board.ship_coords:
             raise ValueError(f'The coordinate ({x}, {y}) is already occupied by one of your ships')      
         
@@ -216,7 +217,7 @@ def validate_direction(direction, x, y, ship_length, board, is_silent):
                 dirX = -1
 
             for segment in range(ship_length):
-                if (x + (dirX * segment) > board.size or y + (dirY * segment) > board.size) or (x + (dirX * segment) < 0 or y + (dirY * segment) < 0):
+                if (x + (dirX * segment) >= board.size or y + (dirY * segment) >= board.size) or (x + (dirX * segment) < 0 or y + (dirY * segment) < 0):
                     # Blocked by wall
                     raise ValueError(f'Ship cannot be placed outside the game board')
                 elif (x + (dirX * segment), y + (dirY * segment)) in board.ship_coords:
@@ -229,21 +230,79 @@ def validate_direction(direction, x, y, ship_length, board, is_silent):
     return True
 
 
-def game_loop():
-    turn = randint(0, 1) # even = player, odd = computer
+def make_guess(board):
+    """
+    Get the coordinates for a guess
+    """
+    if board.type == 'computer':
+        # Player's guess
+        print("It's your turn to guess!")
+        while True:
+            x = input('x : ')
+            y = input('y : ')
+
+            if compute_guess_result(x, y, board, False):
+                break
+    else:
+        # Computer's guess
+        print("It's the computer's turn to guess!")
+        while True:
+            x = str(randint(0, board.size - 1))
+            y = str(randint(0, board.size - 1))
+            if compute_guess_result(x, y, board, True):
+                break
+
+
+def compute_guess_result(x, y, board, is_computer):
+    """
+    Validate guess coordinates, and update game board
+    """
+    try:
+        if not x.isnumeric() or not y.isnumeric():
+            raise ValueError(f'The coordinate ({x}, {y}) is not a number')
+        x = int(x)
+        y = int(y)
+        if (x > board.size or y > board.size) or (x < 0 or y < 0):
+            raise ValueError(f'The coordinate ({x}, {y}) is not on the board. The board ranges from (0, 0) to ({board.size}, {board.size})')      
+        elif (x, y) in board.guesses:
+            raise ValueError(f'The coordinate ({x}, {y}) has already been guessed')      
+
+    except ValueError as e:
+        if not is_computer:
+            print(f"Invalid data: {e}, please try again.\n")
+            return False
+
+    # Update board
+    if is_computer:
+        print(f'The computer guessed ({x}, {y}).')
+    print(f'{board.guess(x, y)}\n')
+    return True
+
+
+def game_loop(player_board, computer_board):
+    """
+    Main game loop
+    """
+    turn = randint(0, 1)  # even = player, odd = computer
     while True:
         if turn % 2 == 0:
-            # player's turn
-            make_guess(0, 0)
+            # Player's turn
+            make_guess(computer_board)
+            computer_board.print()
         else:
-            # computer's turn
+            # Computer's turn
             # get_computer_guess()
-            make_guess(0, 0)
+            make_guess(player_board)
+            player_board.print()
         # if check_for_win():
             # win_game(turn)
+        turn += 1
 
-
+        
 def run_game():
+    """
+    Set up game
+    """
     introduction()
     board_size = get_board_size()
     grid = 0
@@ -273,9 +332,8 @@ def run_game():
             place_ship(player_board, int(ship_length))
             place_ship_C(computer_board, int(ship_length))
             player_board.print()
-            computer_board.print() # temporary     for testing purposes
 
-    game_loop()
+    game_loop(player_board, computer_board)
 
 
 run_game()
