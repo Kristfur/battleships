@@ -142,11 +142,12 @@ def place_ship_C(board, ship_length):  # clean up code clean up code clean up co
                 direction = 'n'
             elif direction == 1:
                 direction = 'e'
-            if direction == 2:
+            elif direction == 2:
                 direction = 's'
             else:
                 direction = 'w'
 
+            print('here', direction)
             if validate_direction(direction, int(x), int(y), ship_length, board, False):
                 break
         # Valid coordinates, add ship to board
@@ -224,6 +225,7 @@ def validate_direction(direction, x, y, ship_length, board, is_silent):
                 elif (x + (dirX * segment), y + (dirY * segment)) in board.ship_coords:
                     # Blocked by boat
                     print(x, y, dirX, dirY, segment)
+                    print(board.board)
                     raise ValueError(f'{direction} is blocked by a ship at ({x + (dirX * segment)}, {y + (dirY * segment)})')
     except ValueError as e:
         if (not is_silent):
@@ -353,7 +355,9 @@ def run_game():
     # Place each ship individually, ships are different sizes
     for ship_length in all_ships:
         for _ in range(all_ships[ship_length]):
+            print('player')
             place_ship(player_board, int(ship_length))
+            print('computer')
             place_ship_C(computer_board, int(ship_length))
             player_board.print()
 
