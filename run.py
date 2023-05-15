@@ -229,6 +229,20 @@ def validate_direction(direction, x, y, ship_length, board, is_silent):
     return True
 
 
+def game_loop():
+    turn = randint(0, 1) # even = player, odd = computer
+    while True:
+        if turn % 2 == 0:
+            # player's turn
+            make_guess(0, 0)
+        else:
+            # computer's turn
+            # get_computer_guess()
+            make_guess(0, 0)
+        # if check_for_win():
+            # win_game(turn)
+
+
 def run_game():
     introduction()
     board_size = get_board_size()
@@ -259,7 +273,9 @@ def run_game():
             place_ship(player_board, int(ship_length))
             place_ship_C(computer_board, int(ship_length))
             player_board.print()
-            computer_board.print()
+            computer_board.print() # temporary     for testing purposes
+
+    game_loop()
 
 
 run_game()
