@@ -279,6 +279,37 @@ def win_game(winner):
         print('Congratulations! You Win!')
     else:
         print('You lost all your battleships')
+    play_again(winner)
+
+
+def play_again(winner):
+    """
+    Ask user if they would like to play again
+    """
+    while True:
+        answer = input('Would you like to play again?\n').lower()
+        if validate_answer(answer):
+            if answer == 'n' or answer == 'no':
+                print('\nExiting the program\nThank You for playing')
+                quit()
+            else:
+                break
+    run_game(winner)
+
+
+def validate_answer(answer):
+    """
+    Validata user's response
+    """
+    valid_answers = ['y', 'yes', 'n', 'no']
+    try:
+        if (answer not in valid_answers):
+            raise ValueError(f'{answer} is not a valid answer')
+    except ValueError as e:
+        if (not is_silent):
+            print(f"Invalid data: {e}, please try again.\n")
+        return False
+    return True
 
 
 def game_loop(player_board, computer_board):
@@ -307,11 +338,20 @@ def game_loop(player_board, computer_board):
         turn += 1
 
        
-def run_game():
+def run_game(winner):
     """
     Set up game
     """
-    introduction()
+    if type(winner) == int:
+        # Increase score counter, if user is playing again
+        scores[winner % 2] += 1
+    else:
+        # Print introduction if it is first game of session
+        introduction()
+
+    # Print scores
+    print(f'Scores: Player: {scores[0]}  --  Computer: {scores[1]}')
+
     board_size = get_board_size()
     grid = 0
     all_ships = []
@@ -345,5 +385,5 @@ def run_game():
 
     game_loop(player_board, computer_board)
 
-
-run_game()
+scores = [0, 0]
+run_game('start')
