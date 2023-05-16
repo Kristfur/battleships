@@ -1,4 +1,5 @@
 from random import randint
+import random
 
 
 class Board:
@@ -228,11 +229,7 @@ def make_guess(board):
     else:
         # Computer's guess
         print("It's the computer's turn to guess!")
-        while True:
-            x = str(randint(0, board.size - 1))
-            y = str(randint(0, board.size - 1))
-            if compute_guess_result(x, y, board, True):
-                break
+        computer_smart_guess(board)
 
 
 def compute_guess_result(x, y, board, is_computer):
@@ -240,8 +237,9 @@ def compute_guess_result(x, y, board, is_computer):
     Validate guess coordinates, and update game board
     """
     try:
-        if not x.isnumeric() or not y.isnumeric():
-            raise ValueError(f'The coordinate ({x}, {y}) is not a number')
+        if not is_computer:
+            if not x.isnumeric() or not y.isnumeric():
+                raise ValueError(f'The coordinate ({x}, {y}) is not a number')
         x = int(x)
         y = int(y)
         if (x >= board.size or y >= board.size) or (x < 0 or y < 0):
@@ -259,6 +257,51 @@ def compute_guess_result(x, y, board, is_computer):
         print(f'The computer guessed ({x}, {y}).')
     print(f'{board.guess(x, y)}\n')
     return True
+
+
+def computer_smart_guess(board):
+    """
+    Use previous hits to work out likely coordinates for the next guess. 
+    Otherwise, guess random coordinates
+    """
+    direction = ['n', 'e', 's', 'w']
+    random.shuffle(direction)
+    # for each X on board, guess 4 neighbours
+    #     if two x in row, guess next square in line
+    # else, return empty and use random coords
+    row = 0
+    for r in board.board:
+        col = 0
+        for cell in r:
+            if cell == "X":
+                # If cell is a 'X', check it's neighbours
+                for d in direction:
+                    if d == 'n' and row >= 1:
+                        if board.board[row - 1][col] == "\u2610" or board.board[row - 1][col] == "\u25A6":
+                            compute_guess_result(col, row - 1, board, True)
+                            return
+                    elif d == 'e' and col < board.size - 1:
+                        if board.board[row][col + 1] == "\u2610"  or board.board[row][col + 1] == "\u25A6":
+                            compute_guess_result(col + 1, row, board, True)
+                            return
+                    elif d == 's' and row < board.size - 1:
+                        if board.board[row + 1][col] == "\u2610"  or board.board[row + 1][col] == "\u25A6":
+                            compute_guess_result(col, row + 1, board, True)
+                            return
+                    elif d == 'w' and col >= 1:
+                        if board.board[row][col - 1] == "\u2610"  or board.board[row][col - 1] == "\u25A6":
+                            compute_guess_result(col - 1, row, board, True)
+                            return
+            col += 1
+        row += 1
+
+    # Choose random coordinates
+    while True:
+        x = randint(0, board.size - 1)
+        y = randint(0, board.size - 1)
+        if compute_guess_result(x, y, board, True):
+            break
+    return
 
 
 def check_for_win(board):
@@ -337,7 +380,7 @@ def game_loop(player_board, computer_board):
                 break
         turn += 1
 
-       
+   
 def run_game(winner):
     """
     Set up game
@@ -384,6 +427,7 @@ def run_game(winner):
             player_board.print()
 
     game_loop(player_board, computer_board)
+
 
 scores = [0, 0]
 run_game('start')
