@@ -8,6 +8,7 @@ Battleships is a strategy guessing game where two players go head-to-head trying
 * [User Experience](#user-experience)
     * [Site Goals](#site-goals)
     * [User Stories](#user-stories)
+    * [Flow Design](#flow-design)
 * [Features](#features)
     * [Features to Implement](#features-to-implement)
 * [Technologies](#technologies)
@@ -63,3 +64,7 @@ Acceptance Criteria:
 
 Implementation:
 * After every completed game, the program keeps track of the user's wins and losses. it is displayed to them throughout the game, and is featured when they finish a game.
+
+## Flow Design
+![Flow Design](docs/read_me_images/battleships-plan.JPG)
+
