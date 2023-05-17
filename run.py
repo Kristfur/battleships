@@ -5,7 +5,7 @@ import random
 class Board:
     """
     Main board class. Sets board size, type (computer or user), number and
-    types of ships. Has methods for adding ships, making guesses and 
+    types of ships. Has methods for adding ships, making guesses and
     printing the board
     """
 
@@ -23,7 +23,7 @@ class Board:
         print("W + E")
         print(f"  S    {self.type}")
         num = "  "
-        # Print numbers along the x and y axis for easy 
+        # Print numbers along the x and y axis for easy
         # coordinate identification
         for c in range(self.size):
             num += f'{c} '
@@ -93,7 +93,7 @@ def place_ship(board, ship_length):
     x = 0
     y = 0
     direction = ''
-    if board.type == 'player':  
+    if board.type == 'player':
         print(f'You are placing a ship of length {ship_length}')
         print('Choose a coordinate for one end of the ship')
 
@@ -108,9 +108,11 @@ def place_ship(board, ship_length):
         # Get player's direction input and verify it
         while True:
             direction = input(
-                'Please choose the direction you want to place your ship (N, E, S, W)\n').lower()
+                'Please choose the direction'
+                ' you want to place your ship (N, E, S, W)\n').lower()
 
-            if validate_direction(direction, int(x), int(y), ship_length, board, False):
+            if validate_direction(
+                    direction, int(x), int(y), ship_length, board, False):
                 break
 
     elif board.type == 'computer':
@@ -133,7 +135,8 @@ def place_ship(board, ship_length):
             else:
                 direction = 'w'
 
-            if validate_direction(direction, int(x), int(y), ship_length, board, False):
+            if validate_direction(
+                    direction, int(x), int(y), ship_length, board, False):
                 break
     # Valid coordinates, add ship to board
     dirX = 0
@@ -160,10 +163,15 @@ def validate_coords(x, y, ship_length, board):
         x = int(x)
         y = int(y)
         if (x >= board.size or y >= board.size) or (x < 0 or y < 0):
-            raise ValueError(f'The coordinate ({x}, {y}) is not on the board. The board ranges from (0, 0) to ({board.size - 1}, {board.size - 1})')      
+            raise ValueError(
+                f'The coordinate ({x}, {y})'
+                f' is not on the board. The board ranges from (0, 0) to'
+                f' ({board.size - 1}, {board.size - 1})')
         elif (x, y) in board.ship_coords:
-            raise ValueError(f'The coordinate ({x}, {y}) is already occupied by one of your ships')      
-        
+            raise ValueError(
+                f'The coordinate ({x}, {y}) is already occupied'
+                f' by one of your ships')
+
         # Check if ship can be placed in any direction from selected coordinate
         # Stops ships being cornered in
         d = ['n', 'e', 's', 'w']
@@ -172,7 +180,8 @@ def validate_coords(x, y, ship_length, board):
             if validate_direction(d[c], x, y, ship_length, board, True):
                 break
             if c >= 3:
-                raise ValueError(f'The area you selected is too small for the ship to fit')
+                raise ValueError(
+                    f'The area you selected is too small for the ship to fit')
             c += 1
 
     except ValueError as e:
@@ -202,12 +211,19 @@ def validate_direction(direction, x, y, ship_length, board, is_silent):
                 dirX = -1
 
             for segment in range(ship_length):
-                if (x + (dirX * segment) >= board.size or y + (dirY * segment) >= board.size) or (x + (dirX * segment) < 0 or y + (dirY * segment) < 0):
+                if (x + (dirX * segment) >= board.size or
+                        y + (dirY * segment) >= board.size or
+                        x + (dirX * segment) < 0 or
+                        y + (dirY * segment) < 0):
                     # Blocked by edge of board
-                    raise ValueError(f'Ship cannot be placed outside the game board')
-                elif (x + (dirX * segment), y + (dirY * segment)) in board.ship_coords:
+                    raise ValueError(
+                        f'Ship cannot be placed outside the game board')
+                elif (x + (dirX * segment),
+                        y + (dirY * segment)) in board.ship_coords:
                     # Blocked by another boat
-                    raise ValueError(f'{direction} is blocked by a ship at ({x + (dirX * segment)}, {y + (dirY * segment)})')
+                    raise ValueError(
+                        f'{direction} is blocked by a ship at'
+                        f' ({x + (dirX * segment)}, {y + (dirY * segment)})')
     except ValueError as e:
         if (not is_silent):
             print(f"Invalid data: {e}, please try again.\n")
@@ -245,9 +261,12 @@ def compute_guess_result(x, y, board, is_computer):
         x = int(x)
         y = int(y)
         if (x >= board.size or y >= board.size) or (x < 0 or y < 0):
-            raise ValueError(f'The coordinate ({x}, {y}) is not on the board. The board ranges from (0, 0) to ({board.size}, {board.size})')      
+            raise ValueError(
+                    f'The coordinate ({x}, {y}) is not on the board. The board'
+                    f' ranges from (0, 0) to ({board.size}, {board.size})')
         elif (x, y) in board.guesses:
-            raise ValueError(f'The coordinate ({x}, {y}) has already been guessed')      
+            raise ValueError(
+                    f'The coordinate ({x}, {y}) has already been guessed')
 
     except ValueError as e:
         if not is_computer:
@@ -263,7 +282,7 @@ def compute_guess_result(x, y, board, is_computer):
 
 def computer_smart_guess(board):
     """
-    Use previous hits to work out likely coordinates for the next guess. 
+    Use previous hits to work out likely coordinates for the next guess.
     Otherwise, guess random coordinates
     """
     direction = ['n', 'e', 's', 'w']
@@ -279,19 +298,23 @@ def computer_smart_guess(board):
                 # If cell is a 'X', check it's neighbours
                 for d in direction:
                     if d == 'n' and row >= 1:
-                        if board.board[row - 1][col] == "\u2610" or board.board[row - 1][col] == "\u25A6":
+                        if (board.board[row - 1][col] == "\u2610" or
+                                board.board[row - 1][col] == "\u25A6"):
                             compute_guess_result(col, row - 1, board, True)
                             return
                     elif d == 'e' and col < board.size - 1:
-                        if board.board[row][col + 1] == "\u2610"  or board.board[row][col + 1] == "\u25A6":
+                        if (board.board[row][col + 1] == "\u2610" or
+                                board.board[row][col + 1] == "\u25A6"):
                             compute_guess_result(col + 1, row, board, True)
                             return
                     elif d == 's' and row < board.size - 1:
-                        if board.board[row + 1][col] == "\u2610"  or board.board[row + 1][col] == "\u25A6":
+                        if (board.board[row + 1][col] == "\u2610" or
+                                board.board[row + 1][col] == "\u25A6"):
                             compute_guess_result(col, row + 1, board, True)
                             return
                     elif d == 'w' and col >= 1:
-                        if board.board[row][col - 1] == "\u2610"  or board.board[row][col - 1] == "\u25A6":
+                        if (board.board[row][col - 1] == "\u2610" or
+                                board.board[row][col - 1] == "\u25A6"):
                             compute_guess_result(col - 1, row, board, True)
                             return
             col += 1
@@ -308,8 +331,9 @@ def computer_smart_guess(board):
 
 def check_for_win(board):
     """
-    Check board if all ship coordinates have been guessed, returns True or False
-    """        
+    Check board if all ship coordinates have been guessed,
+    returns True or False
+    """
     for segment in board.ship_coords:
         if segment not in board.guesses:
             return False
@@ -351,8 +375,7 @@ def validate_answer(answer):
         if (answer not in valid_answers):
             raise ValueError(f'{answer} is not a valid answer')
     except ValueError as e:
-        if (not is_silent):
-            print(f"Invalid data: {e}, please try again.\n")
+        print(f"Invalid data: {e}, please try again.\n")
         return False
     return True
 
