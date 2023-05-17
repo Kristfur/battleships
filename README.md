@@ -109,7 +109,7 @@ v The user has placed their first ship, and is about to place their next ship of
 
 ![Feature - Board after ship](docs/read_me_images/game_after_place.JPG)
 
-## Ship placement validation
+## Ship Placement Validation
 There is robust input validation to ensure the user places their ships correctly on the board. The three types of validation are:
 
 - Coordinate validation:
@@ -156,7 +156,7 @@ If either player guesses correctly, their result will be a hit. These are displa
 
 ![Feature - Board hit](docs/read_me_images/feature_hit.JPG)
 
-## Win screen
+## Win Screen
 - Displays the final board state
 - Tells user who won the game
 - Tracks and displays the users wins and losses
@@ -170,7 +170,7 @@ If either player guesses correctly, their result will be a hit. These are displa
 
 ![Feature - Score](docs/read_me_images/feature_score.JPG)
 
-## Smart Computer guesses
+## Smart Computer Guessing
 In this game, you play against a computer. If the computer were to guess randomly, then it would be too easy to win. A solution to this was to improve the computer's decision making to add more of a challenge to the game.
 
 To achieve this, the computer first starts by guessing randomly, as there is no information about the board yet.
@@ -188,3 +188,6 @@ Example (these are computer guesses on the user's board):
 ![Feature - Smart computer during](docs/read_me_images/feature_smart_guess_middle.JPG)
 
 ![Feature - Smart computer end](docs/read_me_images/feature_smart_guess_end.JPG)
+
+## Features to Implement
+One feature that I would like to implement would be feedback for when a player guesses all the segments of a shih and sinks the ship. I would like to add text that says "You have sunk their Destroyer" and alike. This would add to the game by providing positive feedback for when the user succesfully guesses multiple ship segments.
