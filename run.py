@@ -146,8 +146,8 @@ def place_ship(board, ship_length):
 
         # Get player's coordinate input and verify it
         while True:
-            x = input('x : ')
-            y = input('y : ')
+            x = input('x : \n')
+            y = input('y : \n')
 
             if validate_coords(x, y, ship_length, board, False):
                 break
@@ -287,8 +287,8 @@ def make_guess(board):
         # Player's guess
         print("It's your turn to guess!")
         while True:
-            x = input('x : ')
-            y = input('y : ')
+            x = input('x : \n')
+            y = input('y : \n')
 
             if compute_guess_result(x, y, board, False):
                 break
