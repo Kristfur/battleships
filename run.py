@@ -135,7 +135,9 @@ def place_ship(board, ship_length):
     direction = ''
     if board.type == 'player':
         print(f'\nYou are placing a ship of length {ship_length}')
-        print('Choose the coordinates for one end of the ship:')
+        print(
+            'Choose the coordinates for one end of the ship:'
+            f'\n(0, 0) to ({board.size - 1}, {board.size - 1})')
 
         # Get player's coordinate input and verify it
         while True:
@@ -397,7 +399,7 @@ def play_again(winner):
     Ask user if they would like to play again
     """
     while True:
-        answer = input('Would you like to play again?\n').lower()
+        answer = input('Would you like to play again? (y/n)\n').lower()
         if validate_answer(answer):
             if answer == 'n' or answer == 'no':
                 print('\nExiting the program\nThank You for playing')
@@ -434,7 +436,7 @@ def display_game_boards(player_board, computer_board):
 
     num = " "
     board_gap = "        "
-    text_gap = "" 
+    text_gap = ""
     for i in range(player_board.size - 1):
         text_gap += "  "
     text_gap += board_gap + " "
