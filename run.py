@@ -2,6 +2,7 @@ from random import randint
 import random
 import os
 import time
+from colorama import Fore
 
 
 def clear_terminal():
@@ -20,7 +21,9 @@ class Board:
 
     def __init__(self, size, ships, type):
         self.size = size
-        self.board = [["\u2610" for x in range(size)] for y in range(size)]
+        self.board = [
+            [Fore.BLUE + "\u2610" + Fore.RESET
+                for x in range(size)] for y in range(size)]
         self.type = type
         self.guesses = []
         self.ship_coords = []
@@ -56,10 +59,10 @@ class Board:
         self.guesses.append((x, y))
 
         if (x, y) in self.ship_coords:
-            self.board[y][x] = 'X'
+            self.board[y][x] = Fore.RED + 'X' + Fore.RESET
             return 'Hit!'
         else:
-            self.board[y][x] = '\u2B1E'
+            self.board[y][x] = '\u2576'
             return 'Miss!'
 
     # Add ship to board, if it is player's board, show ships on board
@@ -91,9 +94,10 @@ def introduction():
                     "\nThen you and your opponent will take turns guessing"
                     "\ncoordinates on the other's grid."
                     "\nIf they guess a coordinate that contains a ship"
-                    "\nthat is a Hit! and it is marked with an 'X'"
+                    "\nthat is a Hit! and it is marked with an '"
+                    + Fore.RED + 'X' + Fore.RESET + "'"
                     "\nOtherwise, if they miss,"
-                    "\nit will be marked with a '\u2B1E'")
+                    "\nit will be marked with a '\u2576'")
                 print(
                     "\nYou alternate turns guessing coordinates"
                     "\nuntil a winner emerges!"
@@ -320,9 +324,9 @@ def compute_guess_result(x, y, board, is_computer):
     # Update board
     if is_computer:
         print(f'The computer guessed ({x}, {y}).')
-    time.sleep(500)
+    time.sleep(.5)
     print(f'{board.guess(x, y)}\n')
-    time.sleep(500)
+    time.sleep(.5)
     return True
 
 
@@ -340,26 +344,30 @@ def computer_smart_guess(board):
     for r in board.board:
         col = 0
         for cell in r:
-            if cell == "X":
+            if cell == Fore.RED + 'X' + Fore.RESET:
                 # If cell is a 'X', check it's neighbours
                 for d in direction:
                     if d == 'n' and row >= 1:
-                        if (board.board[row - 1][col] == "\u2610" or
+                        if (board.board[row - 1][col] ==
+                                Fore.BLUE + "\u2610" + Fore.RESET or
                                 board.board[row - 1][col] == "\u25A6"):
                             compute_guess_result(col, row - 1, board, True)
                             return
                     elif d == 'e' and col < board.size - 1:
-                        if (board.board[row][col + 1] == "\u2610" or
+                        if (board.board[row][col + 1] ==
+                                Fore.BLUE + "\u2610" + Fore.RESET or
                                 board.board[row][col + 1] == "\u25A6"):
                             compute_guess_result(col + 1, row, board, True)
                             return
                     elif d == 's' and row < board.size - 1:
-                        if (board.board[row + 1][col] == "\u2610" or
+                        if (board.board[row + 1][col] ==
+                                Fore.BLUE + "\u2610" + Fore.RESET or
                                 board.board[row + 1][col] == "\u25A6"):
                             compute_guess_result(col, row + 1, board, True)
                             return
                     elif d == 'w' and col >= 1:
-                        if (board.board[row][col - 1] == "\u2610" or
+                        if (board.board[row][col - 1] ==
+                                Fore.BLUE + "\u2610" + Fore.RESET or
                                 board.board[row][col - 1] == "\u25A6"):
                             compute_guess_result(col - 1, row, board, True)
                             return
@@ -440,7 +448,7 @@ def display_game_boards(player_board, computer_board):
     num = " "
     board_gap = "        "
     text_gap = ""
-    for i in range(player_board.size - 1):
+    for _ in range(player_board.size - 1):
         text_gap += "  "
     text_gap += board_gap + " "
     print(f"  You{text_gap}Computer")
@@ -489,7 +497,7 @@ def game_loop(player_board, computer_board):
                 win_game(turn)
                 break
         turn += 1
-        time.sleep(500)
+        time.sleep(.5)
 
 
 def run_game(winner):
