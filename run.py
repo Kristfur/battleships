@@ -96,6 +96,7 @@ def introduction():
                     "\nbattleships before your opponent sinks all of yours.")
                 print(
                     "\nYou begin by placing your ships onto the board."
+                    "\nyour ships are represented by '\u25A6 '"
                     "\nThen you and your opponent will take turns guessing"
                     "\ncoordinates on the other's grid."
                     "\nIf they guess a coordinate that contains a ship"
