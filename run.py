@@ -404,9 +404,9 @@ def win_game(winner):
     Print win/lose screen depending on the winner
     """
     if winner % 2 == 0:
-        print('Congratulations! You Win!')
+        print('Congratulations! You Win!\n')
     else:
-        print('You lost all your battleships')
+        print('You lost all your battleships\n')
     play_again(winner)
 
 
@@ -414,6 +414,11 @@ def play_again(winner):
     """
     Ask user if they would like to play again
     """
+    if type(winner) == int:
+        # Increase score counter
+        scores[winner % 2] += 1
+
+    print(f'Score: Player: {scores[0]}  --  Computer: {scores[1]}\n')
     while True:
         answer = input('Would you like to play again? (y/n)\n').lower()
         if validate_answer(answer):
@@ -445,6 +450,7 @@ def display_game_boards(player_board, computer_board):
     side by side for better user experience
     """
     clear_terminal()
+    print(f'Score: Player: {scores[0]}  --  Computer: {scores[1]}\n')
     # Print compass for user to easily identify the direction
     print("  N")
     print("W + E")
@@ -509,10 +515,7 @@ def run_game(winner):
     """
     Set up game
     """
-    if type(winner) == int:
-        # Increase score counter, if user is playing again
-        scores[winner % 2] += 1
-    else:
+    if type(winner) != int:
         # Print introduction if it is first game of session
         introduction()
 
