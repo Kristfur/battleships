@@ -62,7 +62,27 @@ def introduction():
     Print introduction and game rules
     """
     print('\nWelcome to Battleships!')
-    print('Here are the rules...\n')
+    while True:
+        answer = input('Would you like to see how to play? (y/n)').lower
+        if validate_answer(answer):
+            if answer == 'y' or answer == 'yes':
+                print(
+                    "The aim of the game is to sink all of your opponent's"
+                    " battleships before you opponent sinks all of yours.")
+                print(
+                    "You begin by placing your ships onto the board."
+                    " Then you and your opponent will take turns guessing"
+                    " coordinates on the other's grid."
+                    "\nIf they guess a coordinate that contains a ship"
+                    " that is a Hit! and it is marked with an 'X'"
+                    "\nOtherwise, if they Miss!,"
+                    " it will be marked with an \u2B1E")
+                print(
+                    "You alternate turns guessing coordinates"
+                    " until a winner emerges!"
+                    "\n Good Luck!")
+            else:
+                break
 
 
 def get_board_size():
