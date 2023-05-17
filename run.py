@@ -3,6 +3,7 @@ import random
 import os
 import time
 from colorama import Fore
+from pyfiglet import Figlet
 
 
 def clear_terminal():
@@ -80,6 +81,10 @@ def introduction():
     Print introduction and game rules
     """
     clear_terminal()
+    # Print fancy title
+    f = Figlet(font='big')
+    print(f.renderText('BATTLESHIPS'))
+
     print('\nWelcome to Battleships!')
     while True:
         answer = input('Would you like to see how to play? (y/n)\n').lower()
