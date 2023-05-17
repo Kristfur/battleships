@@ -68,3 +68,105 @@ Implementation:
 ## Flow Design
 ![Flow Design](docs/read_me_images/battleships-plan.JPG)
 
+# Features
+## Title Screen
+- Large text displaying the name of the game.
+- Welcome message.
+- Gives user choice to see the rules, and provides them with their response options (y/n).
+
+![Feature - Title screen](docs/read_me_images/feature-title.JPG)
+
+## Rules
+- Clear to read rules.
+- Shows what each symbol represents.
+- Waits for user to press the enter key to continue.
+
+![Feature - Title screen](docs/read_me_images/feature_rules.JPG)
+
+## Board Size
+- Provides user witht he option of the board size.
+- They can choose between a large, medium and small board.
+- The choices are displayed for the user (s, m, l).
+
+![Feature - Board size](docs/read_me_images/feature_board_size.JPG)
+
+## Place Ship
+
+- Displays the game board, and any of the user's previously placed ships.
+- Prompts user to select coordinates for the placement of their next ship, provides the coordinate range for the user to select from.
+- Tells user the length of their next ship to place.
+- After the user chooses the coordinates for ther ship, they will br prompted to choose a direction for the ship to be placed.
+- Their direction options are displayed.
+- There is a compass rose for the user to easily identify the directions.
+
+![Feature - Game place coordinates](docs/read_me_images/game_place_coords.JPG)
+
+v The user is about to place their first ship of length 4.
+
+![Feature - Board before ship](docs/read_me_images/game_before_place.JPG)
+
+v The user has placed their first ship, and is about to place their next ship of length 3.
+
+![Feature - Board after ship](docs/read_me_images/game_after_place.JPG)
+
+## Ship placement validation
+There is robust input validation to ensure the user places their ships correctly on the board. The three types of validation are:
+
+- Coordinate validation:
+    - Prevents user selecting coordinates that are not on the board
+    - Prevents user selecting coordinates that have already been guessed
+
+    ![Feature - Number too big](docs/read_me_images/feature_too_big.JPG)
+
+    ![Feature - Already guessed](docs/read_me_images/feature_already_guessed.JPG)
+
+- Direction validation:
+    - Prevents user selecting a direction that would result in the ship segments being placed over an exsisting ship
+    - Prevents user selecting a direction that would result in the ship segments being placed outside the board
+
+    ![Feature - Blocked by edge](docs/read_me_images/feature_blocked_by_edge.JPG)
+
+    ![Feature - Blocked by ship](docs/read_me_images/feature_blocked_by_ship.JPG)
+
+- Placement area validation:
+    - Prevents user from selecting coordinates of an area that would be too small for them to place a ship.
+    - Only lets user select coordinates if the ship can be placed in al least one of the four directions.
+
+    ![Feature - Area too small](docs/read_me_images/feature_area_too_small.JPG)
+
+## Game Board
+- Compass rose for easily identifing the direction
+- Numbers along x and y axis for easily identifing the coordinated of a cell
+- Boards are titled and displayed in an easy to read fasion
+- User's ships clearly marked on their board
+    
+![Feature - Game board](docs/read_me_images/feature_game_board.JPG)
+
+![Feature - Game board ](docs/read_me_images/feature_game_board.JPG)
+
+The first turn of the game is randomly detirmined who goes first, user or computer. After both the player and computer have guessed. It will display the result of your guess (hit or miss), and display the computer's guess and result. The program will wait for the user to press the enter key to comtinue. 
+
+![Feature - Full turn](docs/read_me_images/game_full_turn.JPG)
+
+Then, the game boards will update providing a visual representation of the guesses and results.
+
+![Feature - Board update](docs/read_me_images/game_board_update.JPG)
+
+If either player guesses correctly, their result will be a hit. These are displayed as a red 'X' on the board.
+
+![Feature - Board hit](docs/read_me_images/feature_hit.JPG)
+
+## Win screen
+- Displays the final board state
+- Tells user who won the game
+- Tracks and displays the users wins and losses
+- Gives the user the option to play again
+
+![Feature - Win screen](docs/read_me_images/feature_win.JPG)
+
+## Score
+- Game keeps track of user's score between games during the same session
+- The scores are displayed throughout the game, and are featured on the wil/lose screen
+
+![Feature - Score](docs/read_me_images/feature_score.JPG)
+
