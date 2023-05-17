@@ -1,6 +1,7 @@
 from random import randint
 import random
 import os
+import time
 
 
 def clear_terminal():
@@ -319,7 +320,9 @@ def compute_guess_result(x, y, board, is_computer):
     # Update board
     if is_computer:
         print(f'The computer guessed ({x}, {y}).')
+    time.sleep(500)
     print(f'{board.guess(x, y)}\n')
+    time.sleep(500)
     return True
 
 
@@ -486,6 +489,7 @@ def game_loop(player_board, computer_board):
                 win_game(turn)
                 break
         turn += 1
+        time.sleep(500)
 
 
 def run_game(winner):
