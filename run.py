@@ -1,5 +1,13 @@
 from random import randint
 import random
+import os
+
+
+def clear_terminal():
+    """
+    Clear terminal window
+    """
+    os.system("cls || clear")
 
 
 class Board:
@@ -18,16 +26,21 @@ class Board:
 
     # Print board to screen
     def print(self):
+        clear_terminal()
+        name = "  Computer"
+        if self.type == "player":
+            name = "  You"
         # Print compass for user to easily identify the direction
         print("  N")
         print("W + E")
-        print(f"  S    {self.type}")
+        print(f"  S\n")
+        print(name)
         num = "  "
         # Print numbers along the x and y axis for easy
         # coordinate identification
         for c in range(self.size):
             num += f'{c} '
-        print(num)
+        print(num + 'x')
         num = 0
         for row in self.board:
             r = ""
@@ -35,6 +48,7 @@ class Board:
                 r += row[c] + " "
             print(f'{num} {r}')
             num += 1
+        print('y\n')
 
     # Add guess to board, return confirmation if ship was hit
     def guess(self, x, y):
@@ -61,26 +75,30 @@ def introduction():
     """
     Print introduction and game rules
     """
+    clear_terminal()
     print('\nWelcome to Battleships!')
     while True:
-        answer = input('Would you like to see how to play? (y/n)').lower
+        answer = input('Would you like to see how to play? (y/n)\n').lower()
         if validate_answer(answer):
             if answer == 'y' or answer == 'yes':
+                clear_terminal()
                 print(
-                    "The aim of the game is to sink all of your opponent's"
-                    " battleships before you opponent sinks all of yours.")
+                    "\nThe aim of the game is to sink all of your opponent's"
+                    "\nbattleships before your opponent sinks all of yours.")
                 print(
-                    "You begin by placing your ships onto the board."
-                    " Then you and your opponent will take turns guessing"
-                    " coordinates on the other's grid."
+                    "\nYou begin by placing your ships onto the board."
+                    "\nThen you and your opponent will take turns guessing"
+                    "\ncoordinates on the other's grid."
                     "\nIf they guess a coordinate that contains a ship"
-                    " that is a Hit! and it is marked with an 'X'"
-                    "\nOtherwise, if they Miss!,"
-                    " it will be marked with an \u2B1E")
+                    "\nthat is a Hit! and it is marked with an 'X'"
+                    "\nOtherwise, if they miss,"
+                    "\nit will be marked with a '\u2B1E'")
                 print(
-                    "You alternate turns guessing coordinates"
-                    " until a winner emerges!"
-                    "\n Good Luck!")
+                    "\nYou alternate turns guessing coordinates"
+                    "\nuntil a winner emerges!"
+                    "\nGood Luck!")
+                input("\nPress Enter to continue...")
+                break
             else:
                 break
 
@@ -96,13 +114,15 @@ def get_board_size():
         # Check if input is valid, if not, inform user and try again
         try:
             size = input(
-                'Please input the board size (large, medium, small)\n').lower()
+                'Please input the board size: small, medium or large'
+                ' (s, m, l)\n').lower()
             if size not in valid_sizes:
                 raise ValueError(f"{size} is not a valid size")
             else:
                 break
         except ValueError as e:
             print(f"Invalid data: {e}, please try again.\n")
+    clear_terminal()
     return size
 
 
@@ -114,15 +134,15 @@ def place_ship(board, ship_length):
     y = 0
     direction = ''
     if board.type == 'player':
-        print(f'You are placing a ship of length {ship_length}')
-        print('Choose a coordinate for one end of the ship')
+        print(f'\nYou are placing a ship of length {ship_length}')
+        print('Choose the coordinates for one end of the ship:')
 
         # Get player's coordinate input and verify it
         while True:
             x = input('x : ')
             y = input('y : ')
 
-            if validate_coords(x, y, ship_length, board):
+            if validate_coords(x, y, ship_length, board, False):
                 break
 
         # Get player's direction input and verify it
@@ -140,7 +160,7 @@ def place_ship(board, ship_length):
         while True:
             x = str(randint(0, board.size - 1))
             y = str(randint(0, board.size - 1))
-            if validate_coords(x, y, ship_length, board):
+            if validate_coords(x, y, ship_length, board, True):
                 break
 
         # Get computer's direction input and verify it
@@ -156,7 +176,7 @@ def place_ship(board, ship_length):
                 direction = 'w'
 
             if validate_direction(
-                    direction, int(x), int(y), ship_length, board, False):
+                    direction, int(x), int(y), ship_length, board, True):
                 break
     # Valid coordinates, add ship to board
     dirX = 0
@@ -173,7 +193,7 @@ def place_ship(board, ship_length):
     board.add_ship(ship_length, int(x), int(y), dirX, dirY)
 
 
-def validate_coords(x, y, ship_length, board):
+def validate_coords(x, y, ship_length, board, is_silent):
     """
     Validate selected coordinates
     """
@@ -205,7 +225,8 @@ def validate_coords(x, y, ship_length, board):
             c += 1
 
     except ValueError as e:
-        print(f"Invalid data: {e}, please try again.\n")
+        if not is_silent:
+            print(f"\nInvalid data: {e}, please try again.\n")
         return False
     return True
 
@@ -246,7 +267,7 @@ def validate_direction(direction, x, y, ship_length, board, is_silent):
                         f' ({x + (dirX * segment)}, {y + (dirY * segment)})')
     except ValueError as e:
         if (not is_silent):
-            print(f"Invalid data: {e}, please try again.\n")
+            print(f"\nInvalid data: {e}, please try again.\n")
         return False
     return True
 
@@ -400,25 +421,64 @@ def validate_answer(answer):
     return True
 
 
+def display_game_boards(player_board, computer_board):
+    """
+    Display player board and computer board
+    side by side for better user experience
+    """
+    clear_terminal()
+    # Print compass for user to easily identify the direction
+    print("  N")
+    print("W + E")
+    print(f"  S\n")
+
+    num = " "
+    board_gap = "        "
+    text_gap = "" 
+    for i in range(player_board.size - 1):
+        text_gap += "  "
+    text_gap += board_gap + " "
+    print(f"  You{text_gap}Computer")
+    # Print numbers along the x and y axis for easy
+    # coordinate identification
+    for c in range(player_board.size):
+        num += f'{c} '
+    print(f'{num}x{board_gap}{num}x')
+    num = 0
+    for row in range(player_board.size):
+        r = f'{num}'
+        for col in range(player_board.size):
+            r += player_board.board[row][col] + " "
+        r += f'{board_gap} {num}'
+        for col in range(computer_board.size):
+            r += computer_board.board[row][col] + " "
+        print(r)
+        num += 1
+    print(f'y{text_gap}  y\n')
+
+
 def game_loop(player_board, computer_board):
     """
     Main game loop
     """
     turn = randint(0, 1)  # even = player, odd = computer
+    display_game_boards(player_board, computer_board)
     while True:
         if turn % 2 == 0:
             # Player's turn
+            display_game_boards(player_board, computer_board)
             make_guess(computer_board)
-            computer_board.print()
             is_win = check_for_win(computer_board)
             if is_win:
+                display_game_boards(player_board, computer_board)
                 win_game(turn)
                 break
         else:
             # Computer's turn
             # get_computer_guess()
             make_guess(player_board)
-            player_board.print()
+            input("Press Enter to continue...")
+            display_game_boards(player_board, computer_board)
             is_win = check_for_win(player_board)
             if is_win:
                 win_game(turn)
@@ -438,7 +498,8 @@ def run_game(winner):
         introduction()
 
     # Print scores
-    print(f'Scores: Player: {scores[0]}  --  Computer: {scores[1]}')
+    clear_terminal()
+    print(f'Score: Player: {scores[0]}  --  Computer: {scores[1]}\n')
 
     board_size = get_board_size()
     grid = 0
@@ -465,11 +526,9 @@ def run_game(winner):
     # Place each ship individually, ships are different sizes
     for ship_length in all_ships:
         for _ in range(all_ships[ship_length]):
-            print('player')
-            place_ship(player_board, int(ship_length))
-            print('computer')
-            place_ship(computer_board, int(ship_length))
             player_board.print()
+            place_ship(player_board, int(ship_length))
+            place_ship(computer_board, int(ship_length))
 
     game_loop(player_board, computer_board)
 
