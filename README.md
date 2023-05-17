@@ -74,7 +74,7 @@ Implementation:
 - Welcome message.
 - Gives user choice to see the rules, and provides them with their response options (y/n).
 
-![Feature - Title screen](docs/read_me_images/feature-title.JPG)
+![Feature - Title screen](docs/read_me_images/feature_title.JPG)
 
 ## Rules
 - Clear to read rules.
@@ -170,3 +170,21 @@ If either player guesses correctly, their result will be a hit. These are displa
 
 ![Feature - Score](docs/read_me_images/feature_score.JPG)
 
+## Smart Computer guesses
+In this game, you play against a computer. If the computer were to guess randomly, then it would be too easy to win. A solution to this was to improve the computer's decision making to add more of a challenge to the game.
+
+To achieve this, the computer first starts by guessing randomly, as there is no information about the board yet.
+
+The computer keeps guessing randomly until it gets a hit, then it will randomly guess one of the neighbouring tiles of the hit mark.
+
+For any hit mark on the board, the computer randomly guesses one of it's unguessed neighbours. If all neighboring cells have been guessed, the computer will return to randomly guessing coordinates.
+
+This process results in guesses clustered around hit marks and makes the computer feel smarter than just randomly guessing around the board, and makes for a more enjoyable gaming experience.
+
+Example (these are computer guesses on the user's board):
+
+![Feature - Smart computer start](docs/read_me_images/feature_smart_guess_begin.JPG)
+
+![Feature - Smart computer during](docs/read_me_images/feature_smart_guess_middle.JPG)
+
+![Feature - Smart computer end](docs/read_me_images/feature_smart_guess_end.JPG)
