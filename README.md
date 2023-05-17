@@ -10,6 +10,14 @@ Battleships is a strategy guessing game where two players go head-to-head trying
     * [User Stories](#user-stories)
     * [Flow Design](#flow-design)
 * [Features](#features)
+    * [Title Screen](#title-screen)
+    * [Rules](#rules)
+    * [Board Size](#board-size)
+    * [Place Ship](#place-ship)
+    * [Ship Placement Validation](#ship-placement-validation)
+    * [Game Board](#game-board)
+    * [Win Screen](#win-screen)
+    * [Smart Compuer Guessing](#smart-computer-guessing)
     * [Features to Implement](#features-to-implement)
 * [Technologies](#technologies)
 * [Testing](#testing)
@@ -70,7 +78,7 @@ Implementation:
 
 # Features
 ## Title Screen
-- Large text displaying the name of the game.
+- Large text displaying the name of the game using pyfiglet.
 - Welcome message.
 - Gives user choice to see the rules, and provides them with their response options (y/n).
 
@@ -113,16 +121,16 @@ v The user has placed their first ship, and is about to place their next ship of
 There is robust input validation to ensure the user places their ships correctly on the board. The three types of validation are:
 
 - Coordinate validation:
-    - Prevents user selecting coordinates that are not on the board
-    - Prevents user selecting coordinates that have already been guessed
+    - Prevents user selecting coordinates that are not on the board.
+    - Prevents user selecting coordinates that have already been guessed.
 
     ![Feature - Number too big](docs/read_me_images/feature_too_big.JPG)
 
     ![Feature - Already guessed](docs/read_me_images/feature_already_guessed.JPG)
 
 - Direction validation:
-    - Prevents user selecting a direction that would result in the ship segments being placed over an exsisting ship
-    - Prevents user selecting a direction that would result in the ship segments being placed outside the board
+    - Prevents user selecting a direction that would result in the ship segments being placed over an exsisting ship.
+    - Prevents user selecting a direction that would result in the ship segments being placed outside the board.
 
     ![Feature - Blocked by edge](docs/read_me_images/feature_blocked_by_edge.JPG)
 
@@ -135,10 +143,10 @@ There is robust input validation to ensure the user places their ships correctly
     ![Feature - Area too small](docs/read_me_images/feature_area_too_small.JPG)
 
 ## Game Board
-- Compass rose for easily identifing the direction
-- Numbers along x and y axis for easily identifing the coordinated of a cell
-- Boards are titled and displayed in an easy to read fasion
-- User's ships clearly marked on their board
+- Compass rose for easily identifing the direction.
+- Numbers along x and y axis for easily identifing the coordinated of a cell.
+- Boards are titled and displayed in an easy to read fasion.
+- User's ships clearly marked on their board.
     
 ![Feature - Game board](docs/read_me_images/feature_game_board.JPG)
 
@@ -157,16 +165,16 @@ If either player guesses correctly, their result will be a hit. These are displa
 ![Feature - Board hit](docs/read_me_images/feature_hit.JPG)
 
 ## Win Screen
-- Displays the final board state
-- Tells user who won the game
-- Tracks and displays the users wins and losses
-- Gives the user the option to play again
+- Displays the final board state.
+- Tells user who won the game.
+- Tracks and displays the users wins and losses.
+- Gives the user the option to play again.
 
 ![Feature - Win screen](docs/read_me_images/feature_win.JPG)
 
 ## Score
-- Game keeps track of user's score between games during the same session
-- The scores are displayed throughout the game, and are featured on the wil/lose screen
+- Game keeps track of user's score between games during the same session.
+- The scores are displayed throughout the game, and are featured on the wil/lose screen.
 
 ![Feature - Score](docs/read_me_images/feature_score.JPG)
 
