@@ -216,4 +216,40 @@ One feature that I would like to implement would be feedback for when a player g
         - colorama - Used to maked colored text in the terminal.
         - pyfiglet - Used to create the title text.
 
-    
+
+
+# Deployment
+
+## Version Control
+This program was pushed to GitHub to the remote repository '[battleships](https://github.com/Kristfur/battleships)'.
+
+The following Git commands were used throughout development:
+
+    git add <file> 
+
+Was used to add files to the staging area before they are committed.
+
+    git commit -m "commit message"
+
+Was used to commit changes to the local repository queue.
+
+    git push
+
+Was used to push all committed code to the remote repository on GitHub.
+
+## Clone the Repository Code Locally
+
+The steps to clone the repository are as follows:
+
+1. From the repository, click the *code* drop down menu
+2. Click on *HTTPS*
+3. Copy the link
+4. Open your IDE (that has git installed)
+5. Paste the git command into the IDE terminal
+6. The project is now cloned on your local machine
+
+# Credits
+
+Python packages: 
+- [colorama](https://pypi.org/project/colorama/)
+- [pyfiglet](http://www.figlet.org/)
