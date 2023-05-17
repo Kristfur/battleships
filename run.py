@@ -23,7 +23,8 @@ class Board:
         print("W + E")
         print(f"  S    {self.type}")
         num = "  "
-        # Print numbers along the x and y axis for easy coordinate identification
+        # Print numbers along the x and y axis for easy 
+        # coordinate identification
         for c in range(self.size):
             num += f'{c} '
         print(num)
@@ -52,7 +53,8 @@ class Board:
             self.ship_coords.append(
                 (x + (dirX * segment), y + (dirY * segment)))
             if self.type == 'player':
-                self.board[y + (dirY * segment)][x + (dirX * segment)] = '\u25A6'
+                self.board[y + (dirY * segment)][x +
+                                                 (dirX * segment)] = '\u25A6'
 
 
 def introduction():
@@ -380,7 +382,7 @@ def game_loop(player_board, computer_board):
                 break
         turn += 1
 
-   
+
 def run_game(winner):
     """
     Set up game
@@ -430,4 +432,5 @@ def run_game(winner):
 
 
 scores = [0, 0]
-run_game('start')
+if __name__ == '__main__':
+    run_game('start')
