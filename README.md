@@ -199,3 +199,21 @@ Example (these are computer guesses on the user's board):
 
 ## Features to Implement
 One feature that I would like to implement would be feedback for when a player guesses all the segments of a shih and sinks the ship. I would like to add text that says "You have sunk their Destroyer" and alike. This would add to the game by providing positive feedback for when the user succesfully guesses multiple ship segments.
+
+# Technologies
+- Codeanywhere
+    - The website was developed using [Codeanywhere](https://app.codeanywhere.com/).
+
+- GitHub
+    - The source code is hosted on [GitHub](https://github.com/Kristfur/battleships).
+
+- Git
+    - Used for version control during the development of the website.
+
+- Python
+    - Python was the main language used
+    - Python packages used:
+        - colorama - Used to maked colored text in the terminal.
+        - pyfiglet - Used to create the title text.
+
+    
