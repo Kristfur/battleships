@@ -2,7 +2,9 @@
 
 Battleships is a strategy guessing game where two players go head-to-head trying to sink the oppontnts ships before their ships are sunk. It is played on a grid of squares where each player takes turns guessing a coordinate on the grid, and the other player responds with 'Hit' or 'Miss'. The first player to correctly guess the position of the opposing player's ship is the winner.
 
-![Battleships Title](docs/read_me_images/feature-title.JPG)
+The link to the live Heroku app is [here](https://battleships-kristfur.herokuapp.com/).
+
+![Battleships Title](docs/read_me_images/feature_title.JPG)
 
 # Table of Contents
 * [User Experience](#user-experience)
@@ -259,7 +261,8 @@ Was used to commit changes to the local repository queue.
 Was used to push all committed code to the remote repository on GitHub.
 
 ## Deployment to Heroku
-This game was deployed with Heroku using Code Institutes mock terminal. The steps for deployment are:
+This game was deployed with Heroku using Code Institutes mock terminal. The link to the live app is [https://battleships-kristfur.herokuapp.com/](https://battleships-kristfur.herokuapp.com/).
+The steps for deployment are:
 
 1. Log in to or create your Heroku account
 2. Fork or clone this repository
