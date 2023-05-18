@@ -1,8 +1,17 @@
+# Import random for computer guesses
 from random import randint
 import random
+
+# Import os to clear terminal
 import os
+
+# Import time to slow computer's turn speed
 import time
+
+# Import colorama for colorful text in terminal
 from colorama import Fore
+
+# Import pyfiglet for fancy title
 from pyfiglet import Figlet
 
 
@@ -87,9 +96,11 @@ def introduction():
 
     print('\nWelcome to Battleships!')
     while True:
+        # Ask user if they would like to see the rules
         answer = input('Would you like to see how to play? (y/n)\n').lower()
         if validate_answer(answer):
             if answer == 'y' or answer == 'yes':
+                # Display the rules
                 clear_terminal()
                 print(
                     "\nThe aim of the game is to sink all of your opponent's"
