@@ -220,7 +220,24 @@ One feature that I would like to implement would be feedback for when a player g
 - Heroku
     - The game is hosted on the heroku platform
 
+# Testing
 
+# Testing
+Throughout development there was constant testing to ensure the functions gave the desired outputs and that there were no unpredictable outcomes.
+
+A more structured testing procedure was also performed. Details of this report can be found [here](TESTING.md).
+
+## PEP8 Validation
+- The program passes through the CI Python Linter without any errors
+
+![Testing - Python linter](docs/read_me_images/testing_python_linter.JPG)
+
+## Unfixed Bugs
+Currently there are no know bugs, if you happen to come across a bug, please let me know and I will address it in a future release.
+
+## Notable (Fixed) Bugs
+
+I came across a couple notable bugs during development. First, was the x and y coordinates of my grid were inconsistant as I was accidentaly using the coordinates backwards (y, x) insstead of (x, y). This cause a bit of headache, but eventually I figued the problem out and resolved it. Secondly, during development of the computer smart guessing, the computer worked about half of the time that I expected it to. This was confusing, because it is working, and then it dosent work at all during the same game. It turns out that I accidently used an if instead of an elif for when the computer was choosing a random neighbouring cell to guess. this caused the computer to only guess neighboring cells that were either to the south or west of the hit mark, but never to the north or east. These bugs have been resolved during the development process.
 
 # Deployment
 
