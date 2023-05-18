@@ -26,6 +26,7 @@ Battleships is a strategy guessing game where two players go head-to-head trying
     * [Notable (Fixed) Bugs](#notable-fixed-bugs)
 * [Deployment](#deployment)
     * [Version Control](#version-control)
+    * [Deployment to Heroku](#deployment-to-heroku)
     * [Clone the Repository Code Locally](#clone-the-repository-code-locally)
 * [Credits](#credits)
 
@@ -202,13 +203,13 @@ One feature that I would like to implement would be feedback for when a player g
 
 # Technologies
 - Codeanywhere
-    - The website was developed using [Codeanywhere](https://app.codeanywhere.com/).
+    - The game was developed using [Codeanywhere](https://app.codeanywhere.com/).
 
 - GitHub
     - The source code is hosted on [GitHub](https://github.com/Kristfur/battleships).
 
 - Git
-    - Used for version control during the development of the website.
+    - Used for version control during the development of the game.
 
 - Python
     - Python was the main language used
@@ -216,12 +217,15 @@ One feature that I would like to implement would be feedback for when a player g
         - colorama - Used to maked colored text in the terminal.
         - pyfiglet - Used to create the title text.
 
+- Heroku
+    - The game is hosted on the heroku platform
+
 
 
 # Deployment
 
 ## Version Control
-This program was pushed to GitHub to the remote repository '[battleships](https://github.com/Kristfur/battleships)'.
+This game was pushed to GitHub to the remote repository '[battleships](https://github.com/Kristfur/battleships)'.
 
 The following Git commands were used throughout development:
 
@@ -236,6 +240,16 @@ Was used to commit changes to the local repository queue.
     git push
 
 Was used to push all committed code to the remote repository on GitHub.
+
+## Deployment to Heroku
+This game was deployed with Heroku using Code Institutes mock terminal. The steps for deployment are:
+
+1. Log in to or create your Heroku account
+2. Fork or clone this repository
+3. Create a new Heroku app
+4. In the settings, add the buildbacks for Python and NodeJS, in that order
+5. Link the Heroku app to the repository
+6. Click Deploy
 
 ## Clone the Repository Code Locally
 
