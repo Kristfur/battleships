@@ -222,9 +222,7 @@ One feature that I would like to implement would be feedback for when a player g
         - pyfiglet - Used to create the title text.
 
 - Heroku
-    - The game is hosted on the heroku platform
-
-# Testing
+    - The game is hosted on the heroku platform. The live link to the app is [here](https://battleships-kristfur.herokuapp.com/).
 
 # Testing
 Throughout development there was constant testing to ensure the functions gave the desired outputs and that there were no unpredictable outcomes.
